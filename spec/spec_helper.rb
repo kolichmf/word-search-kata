@@ -13,7 +13,7 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-
+require 'pry'
 require 'wordsearch'
 
 RSpec.configure do |config|
