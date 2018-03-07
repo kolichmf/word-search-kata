@@ -15,11 +15,24 @@ class Wordsearch
 
   def search_horizontally(word)
     letters = word.split('')
-    @puzzle[letters.shift].map { |starting_coord|
+    (@puzzle[letters.shift] || []).map { |starting_coord|
       coord_list = [starting_coord]
       x,y = starting_coord
       letters.each_with_index do |letter, index|
         coord_list << @puzzle[letter].select {|coord| coord == [x+index+1, y]}.first
+      end
+      coord_list
+    }
+    .reject { |coord_list| coord_list.any?(&:nil?) }
+  end
+
+  def search_vertically(word)
+    letters = word.split('')
+    (@puzzle[letters.shift] || []).map { |starting_coord|
+      coord_list = [starting_coord]
+      x,y = starting_coord
+      letters.each_with_index do |letter, index|
+        coord_list << @puzzle[letter].select {|coord| coord == [x, y+index+1]}.first
       end
       coord_list
     }
