@@ -3,10 +3,10 @@ class Wordsearch
 
   def initialize(file)
     @file = file
-    @search_words = @file.readline.strip.split(',')
+    @search_words = @file.readline.upcase.strip.split(',')
     @puzzle = {}
     @file.each_line.with_index do |line, y|
-      line.strip.split(',').each_with_index do |letter, x|
+      line.strip.upcase.split(',').each_with_index do |letter, x|
         @puzzle[letter] ||= []
         @puzzle[letter] << [x,y]
       end
