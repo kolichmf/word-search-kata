@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'wordsearch'
+
+if File.exist? ARGV[0]
+  wordsearch = Wordsearch.new File.open(ARGV[0])
+  puts wordsearch.complete
+else
+  puts "Please provide a valid file path"
+end

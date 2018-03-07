@@ -98,7 +98,7 @@ describe Wordsearch do
   describe 'complete' do
     it "should print out the solution to the word search" do
       wordsearch = Wordsearch.new File.open('spec/support/test2.txt')
-      expect(wordsearch.complete).to eq <<~EOS
+      output = <<~EOS
         FUN: (12,3),(13,3),(14,3)
         HELLO: (14,0),(13,1),(12,2),(11,3),(10,4)
         PROGRAMMING: (0,0),(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9),(10,10)
@@ -109,6 +109,8 @@ describe Wordsearch do
         TESTING: (1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14)
         WORLD: (8,3),(7,3),(6,3),(5,3),(4,3)
       EOS
+
+      expect(wordsearch.complete).to eq output.rstrip
     end
   end
 end

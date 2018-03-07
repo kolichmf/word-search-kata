@@ -5,6 +5,7 @@ Gem::Specification.new do |s|
   s.email         = 'mikekolich@gmail.com'
   s.description   = "Wordsearch kata for Pillar."
   s.summary       = "wordsearch"
+  s.executables  << "wordsearch"
 
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]

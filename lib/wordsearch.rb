@@ -14,12 +14,9 @@ class Wordsearch
   end
 
   def complete
-    output = @search_words
-              .map {|word| "#{word}: #{search(word).map {|coord| "(#{coord[0]},#{coord[1]})"}.join(',') }"}
-              .join("\n")
-    <<~EOS
-      #{output}
-    EOS
+    @search_words
+      .map {|word| "#{word}: #{search(word).map {|coord| "(#{coord[0]},#{coord[1]})"}.join(',') }"}
+      .join("\n")
   end
 
   def search(word)
@@ -47,7 +44,10 @@ class Wordsearch
           coords: [starting_coord]
         )
 
-        location = coord_list unless coord_list.length < word.length
+        if coord_list.length == word.length
+          location = coord_list
+          break
+        end
       end
     end
 
