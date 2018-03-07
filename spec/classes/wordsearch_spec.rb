@@ -94,4 +94,27 @@ describe Wordsearch do
       expect(@wordsearch.search_diagonally_desc('KOY')).to eq expected_coords
     end
   end
+
+  describe 'search_diagonal_asc' do
+    it 'should return an empty array if the word is not found on a diagonal ascending over the x-axis' do
+      expect(@wordsearch.search_diagonally_asc('abcd123')).to eq []
+    end
+
+    it 'should return an array of coordinates if the word is found on a diagonal over ascending over the x-axis' do
+      expected_coords = [
+          [[2,1],[3,2],[4,3],[5,4],[6,5]]
+      ]
+      expect(@wordsearch.search_diagonally_asc('SPOCK')).to eq expected_coords
+
+      expected_coords = [
+          [[2,11], [3,12], [4,13]]
+      ]
+      expect(@wordsearch.search_diagonally_asc('LEA')).to eq expected_coords
+
+      expected_coords = [
+          [[3,2], [4,3], [5,4], [6,5]]
+      ]
+      expect(@wordsearch.search_diagonally_asc('POCK')).to eq expected_coords
+    end
+  end
 end
