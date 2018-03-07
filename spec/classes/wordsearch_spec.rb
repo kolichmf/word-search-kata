@@ -47,4 +47,28 @@ describe Wordsearch do
       expect(@wordsearch.search_horizontally('PP')).to eq expected_coords
     end
   end
+
+  describe 'search_vertically(word)' do
+    it 'should return an empty array if the word is not found on the y-axis' do
+      expect(@wordsearch.search_vertically('abcd123')).to eq []
+    end
+
+    it 'should return an array of coordinates if the word is found in the puzzle on the y-axis' do
+      # Case 1, only one match
+      expected_coords = [
+          [[0,6],[0,7],[0,8],[0,9],[0,10]]
+      ]
+
+      expect(@wordsearch.search_vertically("BONES")).to eq expected_coords
+
+      # Case 2, more than one match
+      expected_coords = [
+          [[0,4],[0,5]],
+          [[0,13],[0,14]],
+          [[4,13],[4,14]]
+      ]
+
+      expect(@wordsearch.search_vertically("AS")).to eq expected_coords
+    end
+  end
 end
