@@ -13,8 +13,17 @@ class Wordsearch
     end
   end
 
+  def complete
+    output = @search_words
+              .map {|word| "#{word}: #{search(word).map {|coord| "(#{coord[0]},#{coord[1]})"}.join(',') }"}
+              .join("\n")
+    <<~EOS
+      #{output}
+    EOS
+  end
+
   def search(word)
-    locations = []
+    location = []
     starting_coords = @puzzle[word[0]] || []
     starting_coords.each do |starting_coord|
       [
@@ -38,11 +47,11 @@ class Wordsearch
           coords: [starting_coord]
         )
 
-        locations << coord_list unless coord_list.length < word.length
+        location = coord_list unless coord_list.length < word.length
       end
     end
 
-    locations
+    location
   end
 
   def get_coord_list(**args)
