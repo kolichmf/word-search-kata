@@ -21,6 +21,7 @@ class Wordsearch
 
   def search(word)
     location = []
+    word = word.upcase
     starting_coords = @puzzle[word[0]] || []
     starting_coords.each do |starting_coord|
       [

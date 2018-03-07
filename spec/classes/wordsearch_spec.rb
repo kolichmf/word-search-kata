@@ -32,8 +32,14 @@ describe Wordsearch do
       expect(@wordsearch.search("TESTWORD")).to eq []
     end
 
+    it "should be case insensitive" do
+      expected_coords = [
+          [0,5],[1,5],[2,5],[3,5],[4,5],[5,5]
+      ]
+      expect(@wordsearch.search('scotty')).to eq expected_coords
+    end
+
     it 'should return an array of coordinates if the word is found in the puzzle on the x-axis' do
-      # Case 1, only one match
       expected_coords = [
         [0,5],[1,5],[2,5],[3,5],[4,5],[5,5]
       ]
@@ -41,7 +47,6 @@ describe Wordsearch do
     end
 
     it 'should return an array of coordinates if the word is found in the puzzle in reverse on the x-axis' do
-      # Case 1, only one match
       expected_coords = [
         [4,7],[3,7],[2,7],[1,7]
       ]
@@ -49,7 +54,6 @@ describe Wordsearch do
     end
 
     it 'should return an array of coordinates if the word is found in the puzzle on the y-axis' do
-      # Case 1, only one match
       expected_coords = [
         [0,6],[0,7],[0,8],[0,9],[0,10]
       ]
@@ -58,7 +62,6 @@ describe Wordsearch do
     end
 
     it 'should return an array of coordinates if the word is found in the puzzle in reverse on the y-axis' do
-      # Case 1, only one match
       expected_coords = [
         [5,9],[5,8],[5,7],[5,6]
       ]
