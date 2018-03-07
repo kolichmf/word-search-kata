@@ -26,4 +26,25 @@ describe Wordsearch do
       end
     end
   end
+
+  describe "search_horizontally(word)" do
+    it "should return an empty list if the word is not found in the puzzle" do
+      expect(@wordsearch.search_horizontally("TESTWORD")).to eq []
+    end
+
+    it 'should return an array of coordinates if the word is found in the puzzle on the x-axis' do
+      # Case 1, only one match
+      expected_coords = [
+          [[0,5],[1,5],[2,5],[3,5],[4,5],[5,5]]
+      ]
+      expect(@wordsearch.search_horizontally('SCOTTY')).to eq expected_coords
+
+      # Case 2, two matches horizontally
+      expected_coords = [
+          [[10, 5], [11, 5]],
+          [[13, 7], [14, 7]]
+      ]
+      expect(@wordsearch.search_horizontally('PP')).to eq expected_coords
+    end
+  end
 end
