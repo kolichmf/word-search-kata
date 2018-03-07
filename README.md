@@ -13,6 +13,20 @@ In order to successfully solve a word search puzzle you must have a valid puzzle
 - the first line of the file is a comma separated list of words
 - each remaining line is a comma separated list of single characters represeting `the puzzle`
 
+Once you have a valid puzzle file, you may solve the puzzle using the command line by entering the following command:
+
+`wordsearch path/to/your/file`
+
+Alternatively, you may add the gem to your own project and do the following:
+
+```ruby
+require 'wordsearch'
+
+wordsearch = Wordsearch.new File.open("path/to/your/file")
+wordsearch.search("WORD") # returns an array of coordinates, e.g [[0,0],[0,1],[0,2],[0,3]] or [] if not found
+wordsearch.complete # outputs the solution to the puzzle
+```
+
 You can find sample puzzles in the `spec/support` directory, for example:
 
 ```
