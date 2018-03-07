@@ -71,4 +71,27 @@ describe Wordsearch do
       expect(@wordsearch.search_vertically("AS")).to eq expected_coords
     end
   end
+
+  describe 'search_diagonal_desc' do
+    it 'should return an empty array if the word is not found on a diagonal descending over the x-axis' do
+      expect(@wordsearch.search_diagonally_desc('abcd123')).to eq []
+    end
+
+    it 'should return an array of coordinates if the word is found on a diagonal over descending over the x-axis' do
+      expected_coords = [
+          [[4,0],[3,1],[2,2],[1,3],[0,4]]
+      ]
+      expect(@wordsearch.search_diagonally_desc('UHURA')).to eq expected_coords
+
+      expected_coords = [
+          [[5,7], [4,8], [3,9]]
+      ]
+      expect(@wordsearch.search_diagonally_desc('AYY')).to eq expected_coords
+
+      expected_coords = [
+          [[12,10], [11,11], [10,12]]
+      ]
+      expect(@wordsearch.search_diagonally_desc('KOY')).to eq expected_coords
+    end
+  end
 end
