@@ -27,94 +27,71 @@ describe Wordsearch do
     end
   end
 
-  describe "search_horizontally(word)" do
-    it "should return an empty list if the word is not found in the puzzle" do
-      expect(@wordsearch.search_horizontally("TESTWORD")).to eq []
+  describe "search(word)" do
+    it "should return an empty array if the word is not found in the puzzle" do
+      expect(@wordsearch.search("TESTWORD")).to eq []
     end
 
     it 'should return an array of coordinates if the word is found in the puzzle on the x-axis' do
       # Case 1, only one match
       expected_coords = [
-          [[0,5],[1,5],[2,5],[3,5],[4,5],[5,5]]
+        [[0,5],[1,5],[2,5],[3,5],[4,5],[5,5]]
       ]
-      expect(@wordsearch.search_horizontally('SCOTTY')).to eq expected_coords
-
-      # Case 2, two matches horizontally
-      expected_coords = [
-          [[10, 5], [11, 5]],
-          [[13, 7], [14, 7]]
-      ]
-      expect(@wordsearch.search_horizontally('PP')).to eq expected_coords
+      expect(@wordsearch.search('SCOTTY')).to eq expected_coords
     end
-  end
 
-  describe 'search_vertically(word)' do
-    it 'should return an empty array if the word is not found on the y-axis' do
-      expect(@wordsearch.search_vertically('abcd123')).to eq []
+    it 'should return an array of coordinates if the word is found in the puzzle in reverse on the x-axis' do
+      # Case 1, only one match
+      expected_coords = [
+        [[4,7],[3,7],[2,7],[1,7]]
+      ]
+      expect(@wordsearch.search('KIRK')).to eq expected_coords
     end
 
     it 'should return an array of coordinates if the word is found in the puzzle on the y-axis' do
       # Case 1, only one match
       expected_coords = [
-          [[0,6],[0,7],[0,8],[0,9],[0,10]]
+        [[0,6],[0,7],[0,8],[0,9],[0,10]]
       ]
 
-      expect(@wordsearch.search_vertically("BONES")).to eq expected_coords
-
-      # Case 2, more than one match
-      expected_coords = [
-          [[0,4],[0,5]],
-          [[0,13],[0,14]],
-          [[4,13],[4,14]]
-      ]
-
-      expect(@wordsearch.search_vertically("AS")).to eq expected_coords
+      expect(@wordsearch.search("BONES")).to eq expected_coords
     end
-  end
 
-  describe 'search_diagonal_desc' do
-    it 'should return an empty array if the word is not found on a diagonal descending over the x-axis' do
-      expect(@wordsearch.search_diagonally_desc('abcd123')).to eq []
+    it 'should return an array of coordinates if the word is found in the puzzle in reverse on the y-axis' do
+      # Case 1, only one match
+      expected_coords = [
+        [[5,9],[5,8],[5,7],[5,6]]
+      ]
+
+      expect(@wordsearch.search("KHAN")).to eq expected_coords
     end
 
     it 'should return an array of coordinates if the word is found on a diagonal over descending over the x-axis' do
       expected_coords = [
-          [[4,0],[3,1],[2,2],[1,3],[0,4]]
+        [[4,0],[3,1],[2,2],[1,3],[0,4]]
       ]
-      expect(@wordsearch.search_diagonally_desc('UHURA')).to eq expected_coords
-
-      expected_coords = [
-          [[5,7], [4,8], [3,9]]
-      ]
-      expect(@wordsearch.search_diagonally_desc('AYY')).to eq expected_coords
-
-      expected_coords = [
-          [[12,10], [11,11], [10,12]]
-      ]
-      expect(@wordsearch.search_diagonally_desc('KOY')).to eq expected_coords
+      expect(@wordsearch.search('UHURA')).to eq expected_coords
     end
-  end
 
-  describe 'search_diagonal_asc' do
-    it 'should return an empty array if the word is not found on a diagonal ascending over the x-axis' do
-      expect(@wordsearch.search_diagonally_asc('abcd123')).to eq []
+    it 'should return an array of coordinates if the word is found on a diagonal over descending in reverse over the x-axis' do
+      expected_coords = [
+        [[3,3],[2,2],[1,1],[0,0]]
+      ]
+      expect(@wordsearch.search('SULU')).to eq expected_coords
     end
 
     it 'should return an array of coordinates if the word is found on a diagonal over ascending over the x-axis' do
       expected_coords = [
-          [[2,1],[3,2],[4,3],[5,4],[6,5]]
+        [[2,1],[3,2],[4,3],[5,4],[6,5]]
       ]
-      expect(@wordsearch.search_diagonally_asc('SPOCK')).to eq expected_coords
+      expect(@wordsearch.search('SPOCK')).to eq expected_coords
+    end
 
+    it 'should return an array of coordinates if the word is found on a diagonal in reverse over ascending over the x-axis' do
       expected_coords = [
-          [[2,11], [3,12], [4,13]]
+        [[12,12],[11,11],[10,10]]
       ]
-      expect(@wordsearch.search_diagonally_asc('LEA')).to eq expected_coords
-
-      expected_coords = [
-          [[3,2], [4,3], [5,4], [6,5]]
-      ]
-      expect(@wordsearch.search_diagonally_asc('POCK')).to eq expected_coords
+      expect(@wordsearch.search('ZOE')).to eq expected_coords
     end
   end
 end

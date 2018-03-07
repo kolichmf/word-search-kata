@@ -13,55 +13,50 @@ class Wordsearch
     end
   end
 
-  def search_horizontally(word)
-    letters = word.split('')
-    (@puzzle[letters.shift] || []).map { |starting_coord|
-      coord_list = [starting_coord]
-      x,y = starting_coord
-      letters.each_with_index do |letter, index|
-        coord_list << @puzzle[letter].select {|coord| coord == [x+index+1, y]}.first
+  def search(word)
+    locations = []
+    starting_coords = @puzzle[word[0]] || []
+    starting_coords.each do |starting_coord|
+      [
+        [1, 0],     # Horizontal Forward
+        [-1, 0],    # Horizontal Reverse
+        [0, 1],     # Vertical Forward
+        [0, -1],    # Vertical Reverse
+        [1, 1],     # Diagonal Asc Forward
+        [1, -1],    # Diagonal Asc Reverse
+        [-1, -1],   # Diagonal Desc Forward
+        [-1, 1],    # Diagonal Desc Reverse
+      ].each do |next_coord_modifier|
+        # remove the first letter since we have the coords for the first letter
+        letters = word.split('')
+        letters.shift
+
+        coord_list = get_coord_list(
+          coord: starting_coord,
+          modifier: next_coord_modifier,
+          letters: letters,
+          coords: [starting_coord]
+        )
+
+        locations << coord_list unless coord_list.length < word.length
       end
-      coord_list
-    }
-    .reject { |coord_list| coord_list.any?(&:nil?) }
+    end
+
+    locations
   end
 
-  def search_vertically(word)
-    letters = word.split('')
-    (@puzzle[letters.shift] || []).map { |starting_coord|
-      coord_list = [starting_coord]
-      x,y = starting_coord
-      letters.each_with_index do |letter, index|
-        coord_list << @puzzle[letter].select {|coord| coord == [x, y+index+1]}.first
-      end
-      coord_list
-    }
-    .reject { |coord_list| coord_list.any?(&:nil?) }
-  end
+  def get_coord_list(**args)
+    x,y = args[:coord]
+    coords = args[:coords] || []
+    x_modifier, y_modifier = args[:modifier]
+    letters = args[:letters]
+    next_coord = (@puzzle[letters.shift] || []).select { |coord| coord == [x+x_modifier, y+y_modifier] }.first
+    coords << next_coord
 
-  def search_diagonally_desc(word)
-    letters = word.split('')
-    (@puzzle[letters.shift] || []).map { |starting_coord|
-      coord_list = [starting_coord]
-      x,y = starting_coord
-      letters.each_with_index do |letter, index|
-        coord_list << @puzzle[letter].select {|coord| coord == [x-index-1, y+index+1]}.first
-      end
-      coord_list
-    }
-    .reject { |coord_list| coord_list.any?(&:nil?) }
-  end
-
-  def search_diagonally_asc(word)
-    letters = word.split('')
-    (@puzzle[letters.shift] || []).map { |starting_coord|
-      coord_list = [starting_coord]
-      x,y = starting_coord
-      letters.each_with_index do |letter, index|
-        coord_list << @puzzle[letter].select {|coord| coord == [x+index+1, y+index+1]}.first
-      end
-      coord_list
-    }
-    .reject { |coord_list| coord_list.any?(&:nil?) }
+    if letters.empty? || next_coord.nil?
+      coords.compact
+    else
+      get_coord_list(coord: next_coord, letters: letters, coords: coords, modifier: args[:modifier])
+    end
   end
 end
